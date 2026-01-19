@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@maptiler/geocoding-control": "^2.1.7",
+    "@maptiler/sdk": "^3.10.2",
+    "leaflet": "^1.9.4"
+  }
+}

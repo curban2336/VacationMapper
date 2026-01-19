@@ -1,0 +1,13 @@
+:root { background: #ddd; color: black; }
+
+@media (prefers-color-scheme: dark) {
+  :root { background: #333; color: white; }
+}
+
+#map { 
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
