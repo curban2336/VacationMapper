@@ -1,4 +1,4 @@
-//import * as L from "./node_modules/leaflet/dist/leaflet-src";
+import * as L from "leaflet";
 import { GeocodingControl } from "./node_modules/@maptiler/geocoding-control/leaflet.js";
 //import "./node_modules/@maptiler/geocoding-control/style.css";
 
