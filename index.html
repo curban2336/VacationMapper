@@ -15,29 +15,96 @@
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="container-main">
+        <div id="map"></div>
 
-    <script id="map-script" src="map.js"></script>
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
-        const geoKey = '9OPgXOKt7nnq7dXCmHus';
-        L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${geoKey}`, {
-            tileSize: 512,
-            maxZoom: 19,
-            zoomOffset: -1,
-            minZoom: 1,
-            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-            crossOrigin: true
-        }).addTo(map);
+        <script id="map-script" src="map.js"></script>
+        <script>
+            var map = L.map('map').setView([51.505, -0.09], 13);
+            var markerList = [];
+            let selectedLat = null;
+            let selectedLng = null;
+            const geoKey = '9OPgXOKt7nnq7dXCmHus';
+            L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${geoKey}`, {
+                tileSize: 512,
+                maxZoom: 19,
+                zoomOffset: -1,
+                minZoom: 1,
+                attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+                crossOrigin: true
+            }).addTo(map);
 
-        L.control.maptilerGeocoding({
-            apiKey: geoKey,
-            position: 'topright',
-            placeholder: 'Search for places ...',
-            noResultsLabel: 'No results found',
-        }).addTo(map);
-    </script>
-    <p id="info"></p>
+            const geocodingControl = L.control.maptilerGeocoding({
+                apiKey: geoKey,
+                position: 'topright',
+                placeholder: 'Search for places ...',
+                noResultsLabel: 'No results found',
+            }).addTo(map);
+
+            const actionControl = L.control({ position: 'topright' });
+            actionControl.onAdd = function () {
+                const container = L.DomUtil.create('div', 'leaflet-control action-button-control');
+                const button = L.DomUtil.create('button', 'map-action-button', container);
+                button.id = 'actionButton';
+                button.type = 'button';
+                button.textContent = 'Save Location';
+                button.style.display = 'none';
+
+                L.DomEvent.disableClickPropagation(container);
+                L.DomEvent.disableScrollPropagation(container);
+
+                return container;
+            };
+            actionControl.addTo(map);
+
+            const setSelectedFromEvent = function (event, eventName) {
+                const actionButton = document.getElementById('actionButton');
+                if (actionButton) {
+                    actionButton.style.display = 'block';
+                }
+
+                const detail = event?.detail || event || {};
+                const center = detail.center;
+                const featureCenter = detail.feature?.center;
+                const featureCoords = detail.feature?.geometry?.coordinates;
+                const latlng = detail.latlng || detail.location;
+
+                if (Array.isArray(featureCenter) && featureCenter.length >= 2) {
+                    selectedLng = featureCenter[0];
+                    selectedLat = featureCenter[1];
+                    console.log('Selected location:', 'featurecenter', detail, { selectedLat, selectedLng });
+                }
+            };
+
+            geocodingControl.addEventListener('select', function (event) {
+                setSelectedFromEvent(event, 'select');
+            });
+
+            const actionButton = document.getElementById('actionButton');
+            if (actionButton) {
+                actionButton.addEventListener('click', function () {
+                    if (typeof selectedLat !== 'number' || typeof selectedLng !== 'number') {
+                        console.warn('No selected coordinates yet.', { selectedLat, selectedLng });
+                        return;
+                    }
+                    AddMarker(selectedLat, selectedLng);
+                    // Hide button again
+                    this.style.display = 'none';
+                });
+            }
+
+            const AddMarker = (lat, lng) => {
+                if (typeof lat !== 'number' || typeof lng !== 'number') {
+                    console.warn('AddMarker skipped; invalid coordinates.', { lat, lng });
+                    return;
+                }
+                var marker = L.marker([lat, lng]).addTo(map);
+                markerList.push(marker);
+                console.log(markerList);
+            };
+        </script>
+        <p id="info"></p>
+    </div>
 </body>
 
 </html>

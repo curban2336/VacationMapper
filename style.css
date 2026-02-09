@@ -10,4 +10,42 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 0;
+}
+
+.leaflet-top.leaflet-right {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.leaflet-top.leaflet-right .leaflet-control {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.map-action-button {
+  display: none; /* Hidden by default */
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.map-action-button:hover {
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.map-action-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
