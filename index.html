@@ -22,6 +22,7 @@
         <script>
             var map = L.map('map').setView([51.505, -0.09], 13);
             var markerList = [];
+            var locationIndex = 0;
             let selectedLat = null;
             let selectedLng = null;
             const geoKey = '9OPgXOKt7nnq7dXCmHus';
@@ -83,10 +84,10 @@
             const actionButton = document.getElementById('actionButton');
             if (actionButton) {
                 actionButton.addEventListener('click', function () {
-                    if (typeof selectedLat !== 'number' || typeof selectedLng !== 'number') {
-                        console.warn('No selected coordinates yet.', { selectedLat, selectedLng });
-                        return;
-                    }
+                    // if (typeof selectedLat !== 'number' || typeof selectedLng !== 'number') {
+                    //     console.warn('No selected coordinates yet.', { selectedLat, selectedLng });
+                    //     return;
+                    // }
                     AddMarker(selectedLat, selectedLng);
                     // Hide button again
                     this.style.display = 'none';
@@ -94,13 +95,29 @@
             }
 
             const AddMarker = (lat, lng) => {
-                if (typeof lat !== 'number' || typeof lng !== 'number') {
-                    console.warn('AddMarker skipped; invalid coordinates.', { lat, lng });
-                    return;
-                }
-                var marker = L.marker([lat, lng]).addTo(map);
-                markerList.push(marker);
-                console.log(markerList);
+                if (typeof lat !== 'number' || typeof lng !== 'number') return;
+
+                const leafletMarker = L.marker([lat, lng]).addTo(map);
+                const markerData = { marker: leafletMarker, notes: '' };
+                markerList.push(markerData);
+
+                const noteId = `note-${locationIndex++}`;
+                leafletMarker.bindPopup(`
+                    <div>
+                        <label for="${noteId}">Notes</label><br />
+                        <textarea id="${noteId}" rows="4" cols="24" placeholder="Add a note..."></textarea>
+                    </div>
+                `);
+
+                leafletMarker.on('popupopen', () => {
+                    const textarea = document.getElementById(noteId);
+                    if (!textarea) return;
+                    textarea.value = markerData.notes;
+                    textarea.focus();
+                    textarea.addEventListener('input', () => {
+                        markerData.notes = textarea.value;
+                    });
+                });
             };
         </script>
         <p id="info"></p>
