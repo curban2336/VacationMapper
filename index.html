@@ -101,22 +101,33 @@
                 const markerData = { marker: leafletMarker, notes: '' };
                 markerList.push(markerData);
 
-                const noteId = `note-${locationIndex++}`;
+                const index = locationIndex++
+                const noteId = `note-${locationIndex}`;
+                const removeID = `remove-${locationIndex}`;
                 leafletMarker.bindPopup(`
                     <div>
                         <label for="${noteId}">Notes</label><br />
-                        <textarea id="${noteId}" rows="4" cols="24" placeholder="Add a note..."></textarea>
+                        <textarea id="${noteId}" rows="4" cols="24" placeholder="Add a note..."></textarea><br />
+                        <button id="${removeID}" class="map-action-button" type="button">Remove</button>
                     </div>
                 `);
 
                 leafletMarker.on('popupopen', () => {
                     const textarea = document.getElementById(noteId);
+                    const removeButton = document.getElementById(removeID);
                     if (!textarea) return;
                     textarea.value = markerData.notes;
                     textarea.focus();
                     textarea.addEventListener('input', () => {
                         markerData.notes = textarea.value;
                     });
+
+                    if (removeButton) {
+                        removeButton.addEventListener('click', () => {
+                            map.removeLayer(leafletMarker);
+                            markerList = markerList.filter((item) => item !== markerData);
+                        }, { once: true });
+                    }
                 });
             };
         </script>

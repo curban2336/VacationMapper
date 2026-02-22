@@ -49,3 +49,8 @@
   transform: translateY(1px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+.leaflet-popup-content .map-action-button {
+  display: inline-block;
+  margin-top: 8px;
+}
