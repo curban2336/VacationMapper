@@ -182,6 +182,12 @@
                         removeButton.addEventListener('click', () => {
                             map.removeLayer(leafletMarker);
                             markerList = markerList.filter((item) => item !== markerData);
+                            lines.forEach(element => {
+                                if (element.from === markerData || element.to === markerData) {
+                                    map.removeLayer(element.polyLine);
+                                    lines = lines.filter((line) => line.from !== markerData && line.to !== markerData);
+                                }
+                            });
                         }, { once: true });
                     }
                 });
