@@ -22,9 +22,13 @@
         <script>
             var map = L.map('map').setView([51.505, -0.09], 13);
             var markerList = [];
+            var lines = [];
             var locationIndex = 0;
             let selectedLat = null;
             let selectedLng = null;
+            let selectedMarkerData = null;
+            let isLinkMode = false;
+            let linkStartMarkerData = null;
             const geoKey = '9OPgXOKt7nnq7dXCmHus';
             L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${geoKey}`, {
                 tileSize: 512,
@@ -45,6 +49,15 @@
             const actionControl = L.control({ position: 'topright' });
             actionControl.onAdd = function () {
                 const container = L.DomUtil.create('div', 'leaflet-control action-button-control');
+                container.style.display = 'flex';
+                container.style.gap = '8px';
+
+                const linkButton = L.DomUtil.create('button', 'map-action-button', container);
+                linkButton.id = 'linkActionButton';
+                linkButton.type = 'button';
+                linkButton.textContent = 'Make Link';
+                linkButton.style.display = 'none';
+
                 const button = L.DomUtil.create('button', 'map-action-button', container);
                 button.id = 'actionButton';
                 button.type = 'button';
@@ -81,7 +94,9 @@
                 setSelectedFromEvent(event, 'select');
             });
 
+            const info = document.getElementById('info');
             const actionButton = document.getElementById('actionButton');
+            const linkActionButton = document.getElementById('linkActionButton');
             if (actionButton) {
                 actionButton.addEventListener('click', function () {
                     // if (typeof selectedLat !== 'number' || typeof selectedLng !== 'number') {
@@ -94,12 +109,53 @@
                 });
             }
 
+            if (linkActionButton) {
+                linkActionButton.addEventListener('click', function () {
+                    if (!selectedMarkerData) return;
+
+                    isLinkMode = true;
+                    linkStartMarkerData = selectedMarkerData;
+                    this.textContent = 'Select 2nd Marker';
+                    if (info) {
+                        info.textContent = 'Link mode enabled: click another marker to create a line.';
+                    }
+                });
+            }
+
             const AddMarker = (lat, lng) => {
                 if (typeof lat !== 'number' || typeof lng !== 'number') return;
 
                 const leafletMarker = L.marker([lat, lng]).addTo(map);
                 const markerData = { marker: leafletMarker, notes: '' };
                 markerList.push(markerData);
+
+                leafletMarker.on('click', () => {
+                    selectedMarkerData = markerData;
+                    if (linkActionButton) {
+                        linkActionButton.style.display = 'block';
+                    }
+
+                    if (isLinkMode && linkStartMarkerData && linkStartMarkerData !== markerData) {
+                        const startLatLng = linkStartMarkerData.marker.getLatLng();
+                        const endLatLng = markerData.marker.getLatLng();
+                        const polyLine = L.polyline([startLatLng, endLatLng]).addTo(map);
+
+                        lines.push({
+                            from: linkStartMarkerData,
+                            to: markerData,
+                            polyLine
+                        });
+
+                        isLinkMode = false;
+                        linkStartMarkerData = null;
+                        if (linkActionButton) {
+                            linkActionButton.textContent = 'Make Link';
+                        }
+                        if (info) {
+                            info.textContent = 'Link created.';
+                        }
+                    }
+                });
 
                 const index = locationIndex++
                 const noteId = `note-${locationIndex}`;
