@@ -54,3 +54,34 @@
   display: inline-block;
   margin-top: 8px;
 }
+
+.leaflet-popup-content .remove-marker-button {
+  display: block;
+  margin: 8px auto 0;
+}
+
+.action-menu-wrapper {
+  position: relative;
+}
+
+.action-menu-panel {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  display: none;
+  grid-template-columns: repeat(2, max-content);
+  grid-template-rows: repeat(3, auto);
+  gap: 6px;
+}
+
+.action-menu-left .action-menu-panel {
+  right: auto;
+  left: 0;
+}
+
+.action-menu-panel .menu-item-button {
+  display: block;
+  width: 128px;
+  text-align: center;
+  padding: 8px 10px;
+}
