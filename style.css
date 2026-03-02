@@ -100,13 +100,22 @@
 }
 
 @media (max-width: 768px) {
-  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding {
-    width: min(92vw, 420px);
+  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding,
+  .leaflet-top.leaflet-right [class*="maptiler-geocoding"] {
+    width: min(92vw, 420px) !important;
+    max-width: min(92vw, 420px) !important;
   }
 
-  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding input {
+  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding form,
+  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding input,
+  .leaflet-top.leaflet-right [class*="maptiler-geocoding"] form,
+  .leaflet-top.leaflet-right [class*="maptiler-geocoding"] input {
+    width: 100% !important;
+    min-height: 48px;
     height: 48px;
     font-size: 16px;
+    line-height: 1.2;
     padding: 10px 12px;
+    box-sizing: border-box;
   }
 }
