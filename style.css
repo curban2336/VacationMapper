@@ -1,7 +1,15 @@
-:root { background: #ddd; color: black; }
+:root { 
+  --brand-primary: hsl(225, 3%, 75%);
+  --brand-primary-dark: hsl(225, 3%, 25%);
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  --button-background: hsl(113.18, 100%, 25.88%);
+  background: var(--brand-primary); 
+  color: var(--black); 
+}
 
 @media (prefers-color-scheme: dark) {
-  :root { background: #333; color: white; }
+  :root { background: var(--brand-primary-dark); color: var(--brand-primary); }
 }
 
 #map { 
@@ -29,25 +37,26 @@
 .map-action-button {
   display: none; /* Hidden by default */
   padding: 10px 20px;
-  background-color: #fff;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-color: var(--button-background);
+  color: var(--white);
+  border: 2px solid var(--black);
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px var(--black);
   transition: all 0.3s ease;
   z-index: 1001;
 }
 
 .map-action-button:hover {
-  background-color: #f4f4f4;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: var(--brand-primary);
+  box-shadow: 0 2px 8px var(--black);
 }
 
 .map-action-button:active {
   transform: translateY(1px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px var(--black);
 }
 
 .leaflet-popup-content .map-action-button {
@@ -66,6 +75,10 @@
 
 .action-menu-panel {
   position: absolute;
+  background-color: var(--brand-primary-dark);
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  padding: 8px;
   top: 42px;
   right: 0;
   display: none;
