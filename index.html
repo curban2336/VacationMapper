@@ -30,6 +30,7 @@
             let selectedMarkerData = null;
             let isLinkMode = false;
             let linkStartMarkerData = null;
+            let pendingGeocodeMove = false;
             const geoKey = '9OPgXOKt7nnq7dXCmHus';
             L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${geoKey}`, {
                 tileSize: 512,
@@ -105,11 +106,6 @@
             actionControl.addTo(map);
 
             const setSelectedFromEvent = function (event, eventName) {
-                const actionButton = document.getElementById('actionButton');
-                if (actionButton) {
-                    actionButton.style.display = 'block';
-                }
-
                 const detail = event?.detail || event || {};
                 const center = detail.center;
                 const featureCenter = detail.feature?.center;
@@ -119,6 +115,7 @@
                 if (Array.isArray(featureCenter) && featureCenter.length >= 2) {
                     selectedLng = featureCenter[0];
                     selectedLat = featureCenter[1];
+                    pendingGeocodeMove = true;
                     //console.log('Selected location:', 'featurecenter', detail, { selectedLat, selectedLng });
                 }
             };
@@ -132,6 +129,12 @@
             const linkActionButton = document.getElementById('linkActionButton');
             const menuToggleButton = document.getElementById('menuToggleButton');
             const actionMenuPanel = document.getElementById('actionMenuPanel');
+
+            map.on('movestart', function () {
+                if (!pendingGeocodeMove || !actionButton) return;
+                actionButton.style.display = 'block';
+                pendingGeocodeMove = false;
+            });
 
             const closeActionMenu = () => {
                 if (actionMenuPanel) {
