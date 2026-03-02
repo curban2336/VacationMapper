@@ -99,7 +99,6 @@
   padding: 8px 10px;
 }
 
-@media (max-width: 768px) {
   .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding,
   .leaflet-top.leaflet-right [class*="maptiler-geocoding"] {
     width: min(92vw, 420px) !important;
@@ -118,4 +117,3 @@
     padding: 10px 12px;
     box-sizing: border-box;
   }
-}
