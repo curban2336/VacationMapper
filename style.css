@@ -98,3 +98,15 @@
   text-align: center;
   padding: 8px 10px;
 }
+
+@media (max-width: 768px) {
+  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding {
+    width: min(92vw, 420px);
+  }
+
+  .leaflet-top.leaflet-right .leaflet-control-maptiler-geocoding input {
+    height: 48px;
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+}
