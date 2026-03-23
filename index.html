@@ -309,6 +309,9 @@
                                     lines = lines.filter((line) => line.from !== markerData && line.to !== markerData);
                                 }
                             });
+                            isLinkMode = false;
+                            linkStartMarkerData = null;
+                            linkActionButton.style.display = 'none';
                         }, { once: true });
                     }
                 });
