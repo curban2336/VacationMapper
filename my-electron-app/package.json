@@ -1,0 +1,23 @@
+{
+  "name": "vacationmapper",
+  "version": "1.0.0",
+  "description": "maps vacations",
+  "main": "map.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curban2336/VacationMapper.git"
+  },
+  "author": "Christopher Urban <g00269489s@stu.raritanval.edu> (https://github.com/curban2336)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curban2336/VacationMapper/issues"
+  },
+  "homepage": "https://github.com/curban2336/VacationMapper#readme",
+  "devDependencies": {
+    "electron": "^41.1.0"
+  }
+}
