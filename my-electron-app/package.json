@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/curban2336/VacationMapper#readme",
   "devDependencies": {
-    "electron": "^41.1.0"
+    "electron": "^41.1.0",
+    "@maptiler/geocoding-control": "^2.1.7",
+    "@maptiler/sdk": "^3.10.2",
+    "leaflet": "^1.9.4"
   }
 }
