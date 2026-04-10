@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@electron-forge/publisher-github": "^7.11.1"
+  },
+  "name": "",
+  "version": ""
+}
