@@ -42,7 +42,7 @@ This launches the Electron window and loads the map UI.
 
 1. Search for a place in the search bar at the top-right.
 <p align="center">
-   <img src="README_IMG/transcriptPhoto.png" alt="Search for a location" width="850" />
+   <img src="README_IMG/Search_IMG.png" alt="Search for a location" width="850" />
 </p>
 
 2. After the map moves to the result, click **Save Location**.

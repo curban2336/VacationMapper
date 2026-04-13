@@ -41,14 +41,30 @@ This launches the Electron window and loads the map UI.
 ## How to use
 
 1. Search for a place in the search bar at the top-right.
+<p align="center">
+   <img src="my-electron-app/README_IMG/Search_IMG.png" alt="Search for a location" width="850" />
+</p>
+
 2. After the map moves to the result, click **Save Location**.
+<p align="center">
+   <img src="my-electron-app/README_IMG/Marker_IMG.png" alt="Save a selected location as a marker" width="850" />
+</p>
+
 3. Click a marker to open its popup:
    - Enter notes in the text area.
    - Click **Remove** to delete the marker.
+   <p align="center">
+      <img src="my-electron-app/README_IMG/PopUp_IMG.png" alt="Marker popup with notes and remove options" width="850" />
+   </p>
+
 4. To connect markers:
    - Click a marker.
    - Click **Make Link**.
    - Click a second marker to create a line.
+   <p align="center">
+      <img src="my-electron-app/README_IMG/LoadLink_IMG.png" alt="Create a link between two markers" width="850" />
+   </p>
+
 5. Use the top-left menu button (**☰**) for save/load:
    - Save Slot 1/2/3
    - Load Slot 1/2/3
