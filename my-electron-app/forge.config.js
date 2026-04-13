@@ -7,11 +7,10 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'github-user-name',
-          name: 'github-repo-name'
+          owner: 'curban2336',
+          name: 'VacationMapper'
         },
-        prerelease: false,
-        draft: true
+        prerelease: true
       }
     }
   ],
